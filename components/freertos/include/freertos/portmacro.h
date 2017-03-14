@@ -129,7 +129,6 @@ typedef struct {
 	const char *lastLockedFn;
 	int lastLockedLine;
 #endif
-} portMUX_TYPE;
 
  /*
   * Kernel mux values can be:
@@ -233,6 +232,7 @@ static inline unsigned portENTER_CRITICAL_NESTED() { unsigned state = XTOS_SET_I
  * *bitwise inverse* of the old mem if the mem wasn't written. This doesn't seem to happen on the
  * ESP32, though. (Would show up directly if it did because the magic wouldn't match.)
  */
+// this is where spinlock was implemented. so, esp32 gives us a *nix-like SMP implement for FreeRTOS, greate job!
 static inline void uxPortCompareSet(volatile uint32_t *addr, uint32_t compare, uint32_t *set) {
     __asm__ __volatile__(
         "WSR 	    %2,SCOMPARE1 \n"
@@ -260,6 +260,9 @@ static inline void uxPortCompareSet(volatile uint32_t *addr, uint32_t compare, u
 void vPortYield( void );
 void _frxt_setup_switch( void );
 #define portYIELD()					vPortYield()
+//hide the implementation of context switch, ok, well job...
+//I think we can port the zephyr here too, by using these hiding codes cause they are the same. Even more, we
+//can use the SMP implementation for Zephyr too.
 #define portYIELD_FROM_ISR()		_frxt_setup_switch()
 /*-----------------------------------------------------------*/
 

@@ -99,7 +99,8 @@ NOTE: The Xtensa architecture requires stack pointer alignment to 16 bytes.
   space to help manage the spilling of the register windows.
 -------------------------------------------------------------------------------
 */
-
+// use c code to write assambly codes
+// to implmente a RTOS, we need only to know its stack frame:)
 STRUCT_BEGIN
 STRUCT_FIELD (long, 4, XT_STK_EXIT,     exit) /* exit point for dispatch */
 STRUCT_FIELD (long, 4, XT_STK_PC,       pc)   /* return PC */
@@ -344,7 +345,7 @@ STRUCT_END(XtSolFrame)
   expansions are implemented as assembler macros.
 -------------------------------------------------------------------------------
 */
-
+//This is the function call stack frame.
 #ifdef __ASSEMBLER__
 #ifdef __XTENSA_CALL0_ABI__
   /* Call0 */

@@ -635,7 +635,7 @@ void taskYIELD_OTHER_CORE( BaseType_t xCoreID, UBaseType_t uxPriority )
 	TCB_t *curTCB = xTaskGetCurrentTaskHandle();
 	BaseType_t i;
 
-	if (xCoreID != tskNO_AFFINITY) {
+	if (xCoreID != tskNO_AFFINITY) {  //if no cpu affinity, just yield itself, by a common function vPortYieldOtherCore.
 		if ( curTCB->uxPriority < uxPriority ) {
 			vPortYieldOtherCore( xCoreID );
 		}
